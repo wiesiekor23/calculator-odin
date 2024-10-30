@@ -1,6 +1,8 @@
-let initialInput = 5;
 let operator;
-let followingInput = 10;
+let result = 0;
+let arrayCalc = [];
+const displayDiv = document.querySelector("#display");
+let myObject = {array: arrayCalc, result: 0, operator: ""};
 
 let add = function (a, b) {
     return a + b;
@@ -18,7 +20,7 @@ let divide = function (a, b) {
     return a / b;
 }
 
-let operate = function (a, operator, b) {
+let operate = function (a, b, operator) {
     if (operator === "+") {
         return add(a, b);
     } else if (operator === "-") {
@@ -27,67 +29,131 @@ let operate = function (a, operator, b) {
         return multiply(a, b);
     } else if (operator === "/") {
         return divide(a, b);
+    } else {
+        return b;
     }
 }
 
-const array = [];
-
-const populateDisplay = function () {
-    const buttons = document.querySelectorAll(".number");
-    const displayDiv = document.querySelector("#display");
-
+let funky = function() {
+    const buttons = document.querySelectorAll(".operator");
+    
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
-            if (button.classList.contains("one")) {
-                array.push(1);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
+            if(button.classList.contains("plus")) {
+                displayDiv.textContent = "";
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+                displayDiv.textContent = result;
+                arrayCalc = [];
+                myObject.array = arrayCalc;
+                myObject.result = result;
+                myObject.operator = "+";
             }
-            if (button.classList.contains("two")) {
-                array.push(2);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
+            if(button.classList.contains("minus")) {
+                displayDiv.textContent = "";
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+                displayDiv.textContent = result;
+                arrayCalc = [];
+                myObject.array = arrayCalc;
+                myObject.result = result;
+                myObject.operator = "-";
             }
-            if (button.classList.contains("three")) {
-                array.push(3);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
+            if(button.classList.contains("multiply")) {
+                displayDiv.textContent = "";
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+                displayDiv.textContent = result;
+                arrayCalc = [];
+                myObject.array = arrayCalc;
+                myObject.result = result;
+                myObject.operator = "*";
+                
             }
-            if (button.classList.contains("four")) {
-                array.push(4);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
+            if(button.classList.contains("divide")) {
+                displayDiv.textContent = "";
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+                displayDiv.textContent = result;
+                arrayCalc = [];
+                myObject.array = arrayCalc;
+                myObject.result = result;
+                myObject.operator = "/";
+                
             }
-            if (button.classList.contains("five")) {
-                array.push(5);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
+            if(button.classList.contains("equals")) {
+                displayDiv.textContent = "";
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+                displayDiv.textContent = result;
+                arrayCalc = [];
+                myObject.array = arrayCalc;
+                myObject.result = result;
+                myObject.operator = "=";
             }
-            if (button.classList.contains("six")) {
-                array.push(6);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
-            }
-            if (button.classList.contains("seven")) {
-                array.push(7);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
-            }
-            if (button.classList.contains("eight")) {
-                array.push(8);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
-            }
-            if (button.classList.contains("nine")) {
-                array.push(9);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
-            }
-            if (button.classList.contains("zero")) {
-                array.push(0);
-                displayDiv.textContent = array.reduce((string, value) => string + value, "");
+            if(button.classList.contains("backspace")) {
+                arrayCalc.pop();
+                displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
             }
         })
+    })
+}
 
+const activatePopulateDisplay = function() {
+    const buttons = document.querySelectorAll(".number");
+    
+    buttons.forEach((button) => {
+        button.addEventListener("click", populateDisplay);
+        
     });
 };
 
-/* document.addEventListener('DOMContentLoaded', () => {
+const deactivatePopulateDisplay = function() {
     const buttons = document.querySelectorAll(".number");
-    populateDisplay(buttons);
-}) */
+    
+    buttons.forEach((button) => {
+        button.removeEventListener("click", populateDisplay);
+    });
+};
 
-populateDisplay();
-
-//alert(result);
+const populateDisplay = function(event) {
+    const button = event.currentTarget;
+    
+    if (button.classList.contains("one")) {
+        arrayCalc.push(1);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("two")) {
+        arrayCalc.push(2);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("three")) {
+        arrayCalc.push(3);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("four")) {
+        arrayCalc.push(4);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("five")) {
+        arrayCalc.push(5);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("six")) {
+        arrayCalc.push(6);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("seven")) {
+        arrayCalc.push(7);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("eight")) {
+        arrayCalc.push(8);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("nine")) {
+        arrayCalc.push(9);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+    if (button.classList.contains("zero")) {
+        arrayCalc.push(0);
+        displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+    }
+}
+   funky();
+   activatePopulateDisplay();
