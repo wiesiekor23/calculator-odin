@@ -97,9 +97,6 @@ let operators = function () {
             }
             if (button.classList.contains("percent")) {
                 result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")), myObject.operator);
-                //displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "") / 100;
-                //result = arrayCalc.reduce((string, value) => string + value, "") / 100;
-                //arrayCalc = [result];
                 displayDiv.textContent = result;
                 myObject.array = arrayCalc;
                 myObject.result = result;
@@ -110,12 +107,15 @@ let operators = function () {
                 if (result === 0) {
                     if (arrayCalc.includes("-")) {
                         arrayCalc.shift();
+                        myObject.array = arrayCalc;
                     } else {
                         arrayCalc.unshift("-");
+                        myObject.array = arrayCalc;
                     }
                     displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
                 } else {
                     result = -result;
+                    myObject.result = result;
                     displayDiv.textContent = result;
                 }
             }
