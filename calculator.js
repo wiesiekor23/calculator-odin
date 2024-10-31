@@ -28,6 +28,9 @@ let operate = function (a, b, operator) {
     } else if (operator === "*") {
         return multiply(a, b);
     } else if (operator === "/") {
+        if (b === 0) {
+            return "DIV/0 Dummy"
+        }
         return divide(a, b);
     }  else if (operator === "%") {
         if(a === 0) {
