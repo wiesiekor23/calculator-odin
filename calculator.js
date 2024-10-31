@@ -2,7 +2,7 @@ let operator;
 let result = 0;
 let arrayCalc = [];
 const displayDiv = document.querySelector("#display");
-let myObject = {array: arrayCalc, result: 0, operator: ""};
+let myObject = { array: arrayCalc, result: 0, operator: "" };
 
 let add = function (a, b) {
     return a + b;
@@ -29,91 +29,121 @@ let operate = function (a, b, operator) {
         return multiply(a, b);
     } else if (operator === "/") {
         return divide(a, b);
+    }  else if (operator === "%") {
+        if(a === 0) {
+            return b / 100;
+        }
+        return a / 100;
+    }  else if (operator === "=") {
+        return a;
     } else {
         return b;
     }
 }
 
-let funky = function() {
+let operators = function () {
     const buttons = document.querySelectorAll(".operator");
-    
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
-            if(button.classList.contains("plus")) {
-                displayDiv.textContent = "";
-                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+            if (button.classList.contains("plus")) {
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")), myObject.operator);
                 displayDiv.textContent = result;
                 arrayCalc = [];
                 myObject.array = arrayCalc;
                 myObject.result = result;
                 myObject.operator = "+";
             }
-            if(button.classList.contains("minus")) {
-                displayDiv.textContent = "";
-                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+            if (button.classList.contains("minus")) {
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")), myObject.operator);
                 displayDiv.textContent = result;
                 arrayCalc = [];
                 myObject.array = arrayCalc;
                 myObject.result = result;
                 myObject.operator = "-";
             }
-            if(button.classList.contains("multiply")) {
-                displayDiv.textContent = "";
-                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+            if (button.classList.contains("multiply")) {
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")), myObject.operator);
                 displayDiv.textContent = result;
                 arrayCalc = [];
                 myObject.array = arrayCalc;
                 myObject.result = result;
                 myObject.operator = "*";
-                
             }
-            if(button.classList.contains("divide")) {
-                displayDiv.textContent = "";
-                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+            if (button.classList.contains("divide")) {
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")), myObject.operator);
                 displayDiv.textContent = result;
                 arrayCalc = [];
                 myObject.array = arrayCalc;
                 myObject.result = result;
                 myObject.operator = "/";
-                
             }
-            if(button.classList.contains("equals")) {
-                displayDiv.textContent = "";
-                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")),  myObject.operator);
+            if (button.classList.contains("equals")) {
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")), myObject.operator);
                 displayDiv.textContent = result;
                 arrayCalc = [];
                 myObject.array = arrayCalc;
                 myObject.result = result;
                 myObject.operator = "=";
             }
-            if(button.classList.contains("backspace")) {
+            if (button.classList.contains("backspace")) {
                 arrayCalc.pop();
                 displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
             }
-        })
-    })
-}
+            if (button.classList.contains("clear")) {
+                arrayCalc = [];
+                result = 0;
+                myObject = { array: arrayCalc, result: 0, operator: "" };
+                displayDiv.textContent = "";
+            }
+            if (button.classList.contains("percent")) {
+                result = operate(myObject.result, +(myObject.array.reduce((string, value) => string + value, "")), myObject.operator);
+                //displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "") / 100;
+                //result = arrayCalc.reduce((string, value) => string + value, "") / 100;
+                //arrayCalc = [result];
+                displayDiv.textContent = result;
+                myObject.array = arrayCalc;
+                myObject.result = result;
+                myObject.operator = "%";
 
-const activatePopulateDisplay = function() {
-    const buttons = document.querySelectorAll(".number");
-    
-    buttons.forEach((button) => {
-        button.addEventListener("click", populateDisplay);
-        
+            }
+            if (button.classList.contains("plus-minus")) {
+                if (result === 0) {
+                    if (arrayCalc.includes("-")) {
+                        arrayCalc.shift();
+                    } else {
+                        arrayCalc.unshift("-");
+                    }
+                    displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+                } else {
+                    result = -result;
+                    displayDiv.textContent = result;
+                }
+            }
+        });
     });
 };
 
-const deactivatePopulateDisplay = function() {
+
+const activatePopulateDisplay = function () {
     const buttons = document.querySelectorAll(".number");
-    
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", populateDisplay);
+
+    });
+};
+
+const deactivatePopulateDisplay = function () {
+    const buttons = document.querySelectorAll(".number");
+
     buttons.forEach((button) => {
         button.removeEventListener("click", populateDisplay);
     });
 };
 
-const populateDisplay = function(event) {
+const populateDisplay = function (event) {
     const button = event.currentTarget;
-    
+
     if (button.classList.contains("one")) {
         arrayCalc.push(1);
         displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
@@ -154,6 +184,12 @@ const populateDisplay = function(event) {
         arrayCalc.push(0);
         displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
     }
+    if (button.classList.contains("dot")) {
+        if (!arrayCalc.includes(".")) {
+            arrayCalc.push(".");
+            displayDiv.textContent = arrayCalc.reduce((string, value) => string + value, "");
+        }
+    }
 }
-   funky();
-   activatePopulateDisplay();
+operators();
+activatePopulateDisplay();
