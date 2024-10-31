@@ -94,6 +94,9 @@ const handlePlusMinus = function() {
     }
 }
 
+/* Activate and deactivate are here for learning practice only, those functions
+serves no purpose in the code */
+
 const activatePopulateDisplay = function () {
     const buttons = document.querySelectorAll(".number");
 
